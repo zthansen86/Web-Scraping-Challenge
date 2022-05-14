@@ -4,15 +4,15 @@ from webdriver_manager.chrome import ChromeDriverManager
 import time
 import pandas as pd
 
+
 def init_browser():
     executable_path = {'executable_path': ChromeDriverManager().install()}
     browser = Browser('chrome', **executable_path, headless=False)
     return browser
 
 
-
 def scrape():
-    
+
     # Step 1:  Scrape the Mars news site for the latest news title and paragraph text
     browser = init_browser()
     url = 'https://redplanetscience.com'
@@ -25,12 +25,10 @@ def scrape():
     # Extract the latest news title
     news_title = soup.find('div', class_='content_title').get_text()
     # Extract the latest paragraph
-    news_p = soup.find('div', class_ = 'article_teaser_body').get_text()
+    news_p = soup.find('div', class_='article_teaser_body').get_text()
 
     mars_dict['news_title'] = news_title
     mars_dict['news_p'] = news_p
-
-  
 
     # Step 2:  Use splinter to navigate the JPL Mars Space Images site for images
     url_jpl = 'https://spaceimages-mars.com'
@@ -41,7 +39,7 @@ def scrape():
     # Use splinter to click button "FULL IMAGE"
     browser.links.find_by_partial_text('FULL').click()
     # Extract image src data
-    image_src = soup.find('img', class_ = 'headerimage fade-in')['src']
+    image_src = soup.find('img', class_='headerimage fade-in')['src']
     # Format resulting url
     featured_image_url = url_jpl + "/" + image_src
 
@@ -52,17 +50,17 @@ def scrape():
     tables = pd.read_html(url_facts)
     type(tables)
     df = tables[0]
-    df.iloc[0,0] = "Variable"
+    df.iloc[0, 0] = "Variable"
     html_table = df.to_html()
     html_table
 
     # Step 4:  Mars Hemispheres to scrape image urls and titles
     url_hemi = 'https://marshemispheres.com'
     browser.visit(url_hemi)
-    
+
     hemisphere_image_urls = []
 
-    for x in range (4):
+    for x in range(4):
         url_hemi = 'https://marshemispheres.com/'
         browser.visit(url_hemi)
         image = browser.find_by_tag('h3')
@@ -71,7 +69,7 @@ def scrape():
         html1 = browser.html
         soup = BeautifulSoup(html1, 'html.parser')
         url1 = soup.find('img', class_='wide-image')['src']
-        title = soup.find('h2', class_ = 'title').get_text()
+        title = soup.find('h2', class_='title').get_text()
 
         dict = {'title': title, 'image_url': url_hemi + url1}
         hemisphere_image_urls.append(dict)
