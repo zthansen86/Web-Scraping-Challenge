@@ -12,16 +12,16 @@ mongo = PyMongo(app)
 
 @app.route("/")
 def index():
-    mars_data = mongo.db.mars_dict.find_one()
+    mars_data = mongo.db.collection.find_one()
     return render_template("index.html", mars_dict=mars_data)
 
 
 @app.route("/scrape")
 def scraper():
-    mars_dict = mongo.db.mars_dict
+    # mars_dict = mongo.db.collection
     mars_dict_data = scrape_mars.scrape()
-    mars_dict.update_one({}, {"$set": mars_dict_data}, upsert=True)
-    return redirect("/", code=302)
+    mongo.db.collection.replace_one({}, mars_dict_data, upsert=True)
+    return redirect("/")
 
 
 if __name__ == "__main__":

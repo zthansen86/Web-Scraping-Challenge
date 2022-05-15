@@ -53,7 +53,7 @@ def scrape():
     df.iloc[0, 0] = "Variable"
     html_table = df.to_html()
     html_table
-
+    mars_dict["facts"] = html_table
     # Step 4:  Mars Hemispheres to scrape image urls and titles
     url_hemi = 'https://marshemispheres.com'
     browser.visit(url_hemi)
@@ -73,7 +73,8 @@ def scrape():
 
         dict = {'title': title, 'image_url': url_hemi + url1}
         hemisphere_image_urls.append(dict)
-
+    
+    print(hemisphere_image_urls)
     mars_dict['hemisphere_image_urls'] = hemisphere_image_urls
 
     browser.quit
