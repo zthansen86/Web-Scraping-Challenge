@@ -37,7 +37,7 @@
 
             <div class="'col-md-4">
                 <h3>Mars Facts</h3>
-                <div>{{mars_dict.facts}}</div>
+                <div>{{mars_dict.facts| safe}}</div>
             </div>
         </div>
 
@@ -47,6 +47,9 @@
                     <b>Mars Hemispheres</b>
                 </h2>
                 <hr>
+                {% for hemisphere in mars_dict['hemisphere_image_urls'] %}
+                    <li> {{hemisphere["title"]}} </li>
+                {% endfor %}
             </div>
         </div>
     </div>
