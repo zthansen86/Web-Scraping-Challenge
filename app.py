@@ -13,6 +13,7 @@ mongo = PyMongo(app)
 @app.route("/")
 def index():
     mars_data = mongo.db.collection.find_one()
+    print(mars_data)
     return render_template("index.html", mars_dict=mars_data)
 
 

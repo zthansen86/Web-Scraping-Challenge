@@ -42,13 +42,14 @@
         </div>
 
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-3">
                 <h2 class="heading" style="text-align: center;">
                     <b>Mars Hemispheres</b>
                 </h2>
                 <hr>
                 {% for hemisphere in mars_dict['hemisphere_image_urls'] %}
                     <li> {{hemisphere["title"]}} </li>
+                    <img src="{{hemisphere['image_url']}}" alt="Featured Image" />
                 {% endfor %}
             </div>
         </div>
